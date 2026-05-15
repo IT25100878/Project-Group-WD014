@@ -1,5 +1,6 @@
 package com.drivingschool.model;
 
+//Abstract class
 public abstract class Person {
     protected String id;
     protected String name;
