@@ -46,5 +46,11 @@ public class Admin {
         this.role = role;
     }
 
+    //converts object data into a single string.
+    public String toFileString() {
+        return id + "|" + username + "|" + password + "|" + role;
+
+    }
+
 
 }
