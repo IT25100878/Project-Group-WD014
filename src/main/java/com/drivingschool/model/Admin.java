@@ -51,6 +51,14 @@ public class Admin {
         return id + "|" + username + "|" + password + "|" + role;
 
     }
+    //converts a text line from the file into an admin object.
+    public static Admin fromFileString(String line) {
+
+        String[] parts = line.split("\\|");  //split the line using "|"
+
+        return new Admin(parts[0], parts[1], parts[2], parts[3]); //create and return a new Admin object
+
+    }
 
 
 }
