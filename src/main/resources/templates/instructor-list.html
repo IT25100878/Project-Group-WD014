@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Instructor List</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+<div class="container mt-4">
+    <h2>Instructor Management</h2>
+    <a href="/instructors/new" class="btn btn-primary mb-3">Add New Instructor</a>
+    <!-- Search Form -->
+    <div class="row mb-3">
+        <div class="col-md-6">
+            <form method="get" action="/instructors" class="d-flex">
+                <input type="text" name="search" class="form-control me-2"
+                       placeholder="Search by ID, Name, Phone, or Specialization..."
+                       th:value="${searchKeyword}">
+                <button type="submit" class="btn btn-outline-primary">Search</button>
+                <a href="/instructors" class="btn btn-outline-secondary ms-2">Clear</a>
+            </form>
+        </div>
+    </div>
+    <table class="table table-bordered">
+        <thead>
+        <tr><th>ID</th><th>Name</th><th>Phone</th><th>License No</th><th>Specialization</th><th>Status</th><th>Actions</th></tr>
+        </thead>
+        <tbody>
+        <tr th:each="i : ${instructors}">
+            <td th:text="${i.id}"/><td th:text="${i.name}"/><td th:text="${i.phone}"/>
+            <td th:text="${i.licenseNo}"/><td th:text="${i.specialization}"/><td th:text="${i.status}"/>
+            <td>
+                <a th:href="@{/instructors/edit/{id}(id=${i.id})}" class="btn btn-sm btn-warning">Edit</a>
+                <a th:href="@{/instructors/delete/{id}(id=${i.id})}" class="btn btn-sm btn-danger" onclick="return confirm('Delete?')">Delete</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    <a href="/dashboard" class="btn btn-secondary">Back to Dashboard</a>
+</div>
+<script th:if="${param.error}">
+    alert([[${param.error[0]}]]);
+    // Remove the error parameter from the URL without reloading the page
+    window.history.replaceState({}, document.title, window.location.pathname);
+</script>
+</body>
+</html>

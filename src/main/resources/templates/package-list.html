@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Packages</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+<div class="container mt-4">
+    <h2>Package Management</h2>
+    <a href="/packages/new" class="btn btn-primary mb-3">Add New Package</a>
+    <!-- Search Form -->
+    <div class="row mb-3">
+        <div class="col-md-6">
+            <form method="get" action="/packages" class="d-flex">
+                <input type="text" name="search" class="form-control me-2"
+                       placeholder="Search by ID or Name..."
+                       th:value="${searchKeyword}">
+                <button type="submit" class="btn btn-outline-primary">Search</button>
+                <a href="/packages" class="btn btn-outline-secondary ms-2">Clear</a>
+            </form>
+        </div>
+    </div>
+    <table class="table table-bordered">
+        <thead>
+        <tr><th>ID</th><th>Name</th><th>Lessons</th><th>Price (LKR)</th><th>Description</th><th>Actions</th></tr>
+        </thead>
+        <tbody>
+        <tr th:each="p : ${packages}">
+            <td th:text="${p.id}"/><td th:text="${p.name}"/><td th:text="${p.lessonsCount}"/>
+            <td th:text="${p.price}"/><td th:text="${p.description}"/>
+            <td>
+                <a th:href="@{/packages/edit/{id}(id=${p.id})}" class="btn btn-warning btn-sm">Edit</a>
+                <a th:href="@{/packages/delete/{id}(id=${p.id})}" class="btn btn-danger btn-sm" onclick="return confirm('Delete?')">Delete</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    <a href="/dashboard" class="btn btn-secondary">Back to Dashboard</a>
+</div>
+<script th:if="${param.error}">
+    alert([[${param.error[0]}]]);
+    // Remove the error parameter from the URL without reloading the page
+    window.history.replaceState({}, document.title, window.location.pathname);
+</script>
+</body>
+</html>

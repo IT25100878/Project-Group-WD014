@@ -1,0 +1,2 @@
+STU001|Amila De Silva|0771234567|123456789V|Colombo|Auto|Active|123456
+STU002|Bometh Mindula|0779301108|200533804507|admin|Auto/Manual/Heavy and Bike|Active|admin123

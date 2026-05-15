@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Dashboard</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+<div class="container mt-4">
+    <div class="d-flex justify-content-between align-items-center">
+        <h1>Driving School Dashboard</h1>
+        <a href="/logout" class="btn btn-danger">Logout</a>
+    </div>
+    <hr>
+    <div class="row">
+        <div class="col-md-3 mb-3">
+            <div class="card text-white bg-primary">
+                <div class="card-body">
+                    <h5 class="card-title">Total Students</h5>
+                    <p class="card-text display-4" th:text="${totalStudents}">0</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3 mb-3">
+            <div class="card text-white bg-success">
+                <div class="card-body">
+                    <h5 class="card-title">Total Revenue (LKR)</h5>
+                    <p class="card-text display-4" th:text="${totalRevenue}">0</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3 mb-3">
+            <div class="card text-white bg-warning">
+                <div class="card-body">
+                    <h5 class="card-title">Upcoming Schedules</h5>
+                    <p class="card-text display-4" th:text="${upcomingSchedules}">0</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3 mb-3">
+            <div class="card text-white bg-info">
+                <div class="card-body">
+                    <h5 class="card-title">Total Instructors</h5>
+                    <p class="card-text display-4" th:text="${totalInstructors}">0</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="mt-4">
+        <div class="mt-4">
+            <!-- First row: 6 buttons (two rows of 3 columns each) -->
+            <div class="row">
+                <div class="col-md-4 mb-3"><a href="/students" class="btn btn-outline-primary w-100">Students</a></div>
+                <div class="col-md-4 mb-3"><a href="/instructors" class="btn btn-outline-primary w-100">Instructors</a></div>
+                <div class="col-md-4 mb-3"><a href="/vehicles" class="btn btn-outline-primary w-100">Vehicles</a></div>
+                <div class="col-md-4 mb-3"><a href="/schedules" class="btn btn-outline-primary w-100">Schedules</a></div>
+                <div class="col-md-4 mb-3"><a href="/packages" class="btn btn-outline-primary w-100">Packages</a></div>
+                <div class="col-md-4 mb-3"><a href="/payments" class="btn btn-outline-primary w-100">Payments</a></div>
+            </div>
+
+            <!-- Second row: Admin button (full width) – only for SuperAdmin -->
+            <div th:if="${session.adminRole == 'SuperAdmin'}" class="row">
+                <div class="col-12 mb-3">
+                    <a href="/admins" class="btn btn-outline-danger w-100">Admins</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

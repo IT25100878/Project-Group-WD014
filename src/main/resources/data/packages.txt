@@ -1,0 +1,1 @@
+PKG001|Advance Payment - Auto|0|5000.0|This payment includes initial documentations and exam fees

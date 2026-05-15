@@ -1,0 +1,2 @@
+ADM001|admin|admin123|SuperAdmin
+ADM002|manager|manager123|Admin
