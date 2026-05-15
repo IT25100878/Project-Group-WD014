@@ -29,14 +29,5 @@ public class Package {
         return id + "|" + name + "|" + lessonsCount + "|" + price + "|" + description;
     }
 
-    public static Package fromFileString(String line) {
-        String[] parts = line.split("\\|");
-        if (parts.length != 5) {
-            // Skip invalid lines (log error or return null)
-            System.err.println("Skipping malformed line: " + line);
-            return null;
-        }
-        return new Package(parts[0], parts[1], Integer.parseInt(parts[2]),
-                Double.parseDouble(parts[3]), parts[4]);
-    }
+
 }
