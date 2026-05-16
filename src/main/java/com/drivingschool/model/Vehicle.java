@@ -32,4 +32,8 @@ public class Vehicle {
     public String getStatus() { return status; }
     public void setStatus(String status) { this.status = status; }
 
+    public String toFileString() {
+        return id + "|" + regNo + "|" + model + "|" + type + "|" + fuelType + "|" + status;
+    }
+
 }
