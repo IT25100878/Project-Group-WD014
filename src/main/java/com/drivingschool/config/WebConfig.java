@@ -26,5 +26,11 @@ public class WebConfig implements WebMvcConfigurer {
                 .addPathPatterns("/students/**", "/instructors/**", "/vehicles/**",
                         "/schedules/**", "/packages/**", "/payments/**")
                 .order(3);
+
+        // 4. Student login interceptor (protects student dashboard)
+        registry.addInterceptor(new StudentInterceptor())
+                .addPathPatterns("/student/dashboard")
+                .excludePathPatterns("/student/login", "/student/logout")
+                .order(4);
     }
 }
