@@ -37,22 +37,7 @@ public class StudentController {
     }
 
     @PostMapping("/save")
-    public String saveStudent(Student student) throws IOException {
-        if (student.getId() == null || student.getId().isEmpty()) {
-            List<Student> existing = studentService.getAllStudents();
-            int nextId = existing.size() + 1;
-            String newId = "STU" + String.format("%03d", nextId);
-            student.setId(newId);
-            student.setStatus("Active");
-            if (student.getPassword() == null || student.getPassword().isEmpty()) {
-                student.setPassword("123456");
-            }
-            studentService.addStudent(student);
-        } else {
-            studentService.updateStudent(student);
-        }
-        return "redirect:/students";
-    }
+
 
     @GetMapping("/edit/{id}")
     public String showEditForm(@PathVariable String id, Model model) throws IOException {
