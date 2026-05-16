@@ -40,6 +40,17 @@ public class AdminService {
                 .orElse(null);  //return null if no admin is found
     }
 
+    //update admin details in the file
+    public void updateAdmin(Admin updated) throws IOException {
+        List<Admin> list = getAllAdmins(); //get all admins
+        for (int i = 0; i < list.size(); i++) {  //loop through the list
+            if (list.get(i).getId().equals(updated.getId()))  //check if admin ID matches
+
+                list.set(i, updated); //replace old admin with new details
+        }
+        saveAll(list); //save updated list back to the file
+    }
+
 
 
 
