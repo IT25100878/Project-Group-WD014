@@ -31,4 +31,11 @@ public class VehicleService {
         return list;
     }
 
+    public Vehicle getVehicleById(String id) throws IOException {
+        return getAllVehicles().stream()
+                .filter(v -> v.getId().equals(id))
+                .findFirst()
+                .orElse(null);
+    }
+
 }
