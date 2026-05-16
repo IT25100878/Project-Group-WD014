@@ -31,6 +31,15 @@ public class AdminService {
         return list; //return the admin list
     }
 
+    //find one admin using ID
+    public Admin getAdminById(String id) throws IOException {
+
+        return getAllAdmins().stream() //get all admins and search for the matching ID
+                .filter(a -> a.getId().equals(id)) //check if admin ID matches the given ID
+                .findFirst()  //get first matching admin
+                .orElse(null);  //return null if no admin is found
+    }
+
 
 
 
