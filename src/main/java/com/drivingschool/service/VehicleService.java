@@ -38,4 +38,15 @@ public class VehicleService {
                 .orElse(null);
     }
 
+    public void updateVehicle(Vehicle updated) throws IOException {
+        List<Vehicle> list = getAllVehicles();
+        for (int i = 0; i < list.size(); i++) {
+            if (list.get(i).getId().equals(updated.getId())) {
+                list.set(i, updated);
+                break;
+            }
+        }
+        saveAll(list);
+    }
+
 }
