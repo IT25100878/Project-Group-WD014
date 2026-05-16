@@ -62,6 +62,17 @@ public class AdminService {
         saveAll(filtered);//save updated list back to the file
     }
 
+    //save all admin data to the file
+    private void saveAll(List<Admin> list) throws IOException {
+
+        List<String> lines = new ArrayList<>(); //create a list to store admin data as string
+        for (Admin a : list)  //loop through admins
+            lines.add(a.toFileString()); //convert each admin into text and add to list
+
+        fileHandler.writeAllLines(FILE_NAME, lines); //write all lines to file
+    }
+
+
 
 
 
