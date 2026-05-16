@@ -2,15 +2,36 @@ package com.drivingschool.model;
 
 import java.time.LocalDateTime;
 
-public class Schedule {
-    private String id;
-    private String studentId;
-    private String instructorId;
-    private String vehicleId;
-    private LocalDateTime startTime;
-    private LocalDateTime endTime;
-    private String status;     // Booked, Completed, Cancelled
+/**
+ * Schedule class represents a driving lesson booking between
+ * a student, instructor, and vehicle.
+ * It stores timing details and status of the booking.
+ */
 
+public class Schedule {
+
+    // Unique identifier for the schedule (e.g., SCH001)
+    private String id;
+
+    // ID of the student assigned to this schedule
+    private String studentId;
+
+    // ID of the instructor assigned to this schedule
+    private String instructorId;
+
+    // ID of the vehicle used in this schedule
+    private String vehicleId;
+
+    // Start time of the scheduled lesson
+    private LocalDateTime startTime;
+
+    // End time of the scheduled lesson
+    private LocalDateTime endTime;
+
+    // Status of the schedule (Booked, Completed, Cancelled)
+    private String status;
+
+    //Constructor to initialize all fields of Schedule
     public Schedule(String id, String studentId, String instructorId, String vehicleId,
                     LocalDateTime startTime, LocalDateTime endTime, String status) {
         this.id = id;
@@ -51,11 +72,21 @@ public class Schedule {
     public void setStatus(String status) {
         this.status = status; }
 
+    // ================= FILE STORAGE METHODS =================
+
+    /**
+     * Converts Schedule object into a pipe-separated string
+     * for saving into a file.
+     */
     public String toFileString() {
         return id + "|" + studentId + "|" + instructorId + "|" + vehicleId + "|" +
                 startTime + "|" + endTime + "|" + status;
     }
 
+    /**
+     * Creates a Schedule object from a pipe-separated file string.
+     * Used when reading data from a file.
+     */
     public static Schedule fromFileString(String line) {
         String[] parts = line.split("\\|");
         return new Schedule(parts[0], parts[1], parts[2], parts[3],
