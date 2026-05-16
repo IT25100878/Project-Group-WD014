@@ -55,5 +55,12 @@ public class VehicleService {
                 .collect(Collectors.toList());
         saveAll(filtered);
     }
+    private void saveAll(List<Vehicle> list) throws IOException {
+        List<String> lines = new ArrayList<>();
+        for (Vehicle v : list) {
+            lines.add(v.toFileString());
+        }
+        fileHandler.writeAllLines(FILE_NAME, lines);
+    }
 
 }
