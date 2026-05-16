@@ -60,5 +60,11 @@ public class VehicleController {
         return "vehicle-form";
     }
 
+    @GetMapping("/delete/{id}")
+    public String delete(@PathVariable String id) throws IOException {
+        vehicleService.deleteVehicle(id);
+        return "redirect:/vehicles";
+    }
+
 
 }
