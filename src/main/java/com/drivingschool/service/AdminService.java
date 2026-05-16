@@ -51,6 +51,17 @@ public class AdminService {
         saveAll(list); //save updated list back to the file
     }
 
+    //method to delete an admin by ID
+    public void deleteAdmin(String id) throws IOException {
+
+        List<Admin> filtered = getAllAdmins() // get all admins and remove the one with matching ID
+                .stream()
+                .filter(a -> !a.getId().equals(id)) //keep admins whose ID is not equal to given ID
+                .collect(Collectors.toList()); //convert result back to list
+
+        saveAll(filtered);//save updated list back to the file
+    }
+
 
 
 
