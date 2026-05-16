@@ -16,4 +16,8 @@ public class VehicleService {
     private FileHandler fileHandler;
     private final String FILE_NAME = "vehicles.txt";
 
+    public void addVehicle(Vehicle vehicle) throws IOException {
+        fileHandler.appendLine(FILE_NAME, vehicle.toFileString());
+    }
+
 }
