@@ -20,4 +20,15 @@ public class VehicleService {
         fileHandler.appendLine(FILE_NAME, vehicle.toFileString());
     }
 
+    public List<Vehicle> getAllVehicles() throws IOException {
+        List<String> lines = fileHandler.readAllLines(FILE_NAME);
+        List<Vehicle> list = new ArrayList<>();
+        for (String line : lines) {
+            if (!line.trim().isEmpty()) {
+                list.add(Vehicle.fromFileString(line));
+            }
+        }
+        return list;
+    }
+
 }
