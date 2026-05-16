@@ -15,5 +15,10 @@ public class WebConfig implements WebMvcConfigurer {
                         "/schedules/**", "/packages/**", "/payments/**", "/admins/**", "/dashboard")
                 .excludePathPatterns("/login", "/css/**", "/js/**")
                 .order(1);
+
+        // 2. Admin role-based interceptor (blocks Manager from /admins)
+        registry.addInterceptor(new AdminAuthorizationInterceptor())
+                .addPathPatterns("/admins/**")
+                .order(2);
     }
 }
