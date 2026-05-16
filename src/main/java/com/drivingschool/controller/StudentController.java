@@ -31,18 +31,44 @@ public class StudentController {
 
     @GetMapping("/new")
     public String showCreateForm(Model model) {
-        Student emptyStudent = new Student("", "", "", "", "", "", "", "");
-        model.addAttribute("student", emptyStudent);
+        model.addAttribute("student", new Student("", "", "", "", "", "", "", ""));
         return "student-form";
     }
 
     @PostMapping("/save")
-
+    public String saveStudent(Student student) throws IOException {
+        if (student.getId() == null || student.getId().isEmpty()) {
+            //generate unique ID
+            List<Student> existing = studentService.getAllStudents();
+            int maxId = 0;
+            for (Student s : existing) {
+                String id = s.getId();
+                if (id != null && id.startsWith("STU")) {
+                    try {
+                        int num = Integer.parseInt(id.substring(3));
+                        if (num > maxId) maxId = num;
+                    } catch (NumberFormatException ignored) {}
+                }
+            }
+            int nextId = maxId + 1;
+            String newId = "STU" + String.format("%03d", nextId);
+            student.setId(newId);
+            student.setStatus("Active");
+            if (student.getPassword() == null || student.getPassword().isEmpty()) {
+                student.setPassword("123456");
+            }
+            studentService.addStudent(student);
+        } else {
+            // UPDATE
+            studentService.updateStudent(student);
+        }
+        return "redirect:/students";
+    }
 
     @GetMapping("/edit/{id}")
     public String showEditForm(@PathVariable String id, Model model) throws IOException {
-        Student student = studentService.getStudentById(id);   // ✅ fixed
-        model.addAttribute("student", student);               // ✅ fixed
+        Student student = studentService.getStudentById(id);
+        model.addAttribute("student", student);
         return "student-form";
     }
 
