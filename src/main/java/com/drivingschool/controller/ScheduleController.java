@@ -101,3 +101,11 @@ public class ScheduleController {
         }
         return "redirect:/schedules";
     }
+
+    @GetMapping("/delete/{id}")
+    public String delete(@PathVariable String id) throws IOException {
+        scheduleService.deleteSchedule(id);
+        return "redirect:/schedules";
+    }
+}
+
