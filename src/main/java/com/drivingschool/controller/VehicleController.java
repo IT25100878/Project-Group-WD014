@@ -30,5 +30,11 @@ public class VehicleController {
         return "vehicle-list";
     }
 
+    @GetMapping("/new")
+    public String showCreateForm(Model model) {
+        model.addAttribute("vehicle", new Vehicle("", "", "", "", "", ""));
+        return "vehicle-form";
+    }
+
 
 }
