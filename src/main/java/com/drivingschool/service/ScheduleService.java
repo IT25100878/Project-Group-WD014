@@ -31,3 +31,21 @@ public class ScheduleService {
         return list;
     }
 
+    public Schedule getScheduleById(String id) throws IOException {
+        return getAllSchedules().stream()
+                .filter(s -> s.getId().equals(id))
+                .findFirst()
+                .orElse(null);
+    }
+
+    public void updateSchedule(Schedule updated) throws IOException {
+        List<Schedule> list = getAllSchedules();
+        for (int i = 0; i < list.size(); i++) {
+            if (list.get(i).getId().equals(updated.getId())) {
+                list.set(i, updated);
+                break;
+            }
+        }
+        saveAll(list);
+    }
+
