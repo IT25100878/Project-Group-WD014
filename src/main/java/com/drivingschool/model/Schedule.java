@@ -21,3 +21,32 @@ public class Schedule {
         this.endTime = endTime;
         this.status = status;
     }
+
+    // Getters and Setters (generate via IntelliJ)
+    public String getId() {
+        return id; }
+    public void setId(String id) {
+        this.id = id; }
+    public String getStudentId() {
+        return studentId; }
+    public void setStudentId(String studentId) {
+        this.studentId = studentId; }
+    public String getInstructorId() {
+        return instructorId; }
+    public void setInstructorId(String instructorId) {
+        this.instructorId = instructorId; }
+    public String getVehicleId() { return vehicleId; }
+    public void setVehicleId(String vehicleId) {
+        this.vehicleId = vehicleId; }
+    public LocalDateTime getStartTime() {
+        return startTime; }
+    public void setStartTime(LocalDateTime startTime) {
+        this.startTime = startTime; }
+    public LocalDateTime getEndTime() {
+        return endTime; }
+    public void setEndTime(LocalDateTime endTime) {
+        this.endTime = endTime; }
+    public String getStatus() {
+        return status; }
+    public void setStatus(String status) {
+        this.status = status; }
