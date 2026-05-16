@@ -20,5 +20,11 @@ public class WebConfig implements WebMvcConfigurer {
         registry.addInterceptor(new AdminAuthorizationInterceptor())
                 .addPathPatterns("/admins/**")
                 .order(2);
+
+        // 3. Manager read-only interceptor (optional – blocks write operations)
+        registry.addInterceptor(new AuthorizationInterceptor())
+                .addPathPatterns("/students/**", "/instructors/**", "/vehicles/**",
+                        "/schedules/**", "/packages/**", "/payments/**")
+                .order(3);
     }
 }
