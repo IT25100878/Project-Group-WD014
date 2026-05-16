@@ -77,3 +77,27 @@ public class ScheduleController {
 
         return "schedule-form";
     }
+
+    @PostMapping("/save")
+    public String save(@RequestParam String id,
+                       @RequestParam String studentId,
+                       @RequestParam String instructorId,
+                       @RequestParam String vehicleId,
+                       @RequestParam String startTime,
+                       @RequestParam String endTime,
+                       @RequestParam String status) throws IOException {
+
+        LocalDateTime start = LocalDateTime.parse(startTime, formatter);
+        LocalDateTime end = LocalDateTime.parse(endTime, formatter);
+        Schedule schedule = new Schedule(id, studentId, instructorId, vehicleId, start, end, status);
+
+        if (schedule.getId() == null || schedule.getId().isEmpty()) {
+            List<Schedule> existing = scheduleService.getAllSchedules();
+            int nextId = existing.size() + 1;
+            schedule.setId("SCH" + String.format("%03d", nextId));
+            scheduleService.addSchedule(schedule);
+        } else {
+            scheduleService.updateSchedule(schedule);
+        }
+        return "redirect:/schedules";
+    }
