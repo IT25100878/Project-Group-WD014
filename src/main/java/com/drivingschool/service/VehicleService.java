@@ -49,4 +49,11 @@ public class VehicleService {
         saveAll(list);
     }
 
+    public void deleteVehicle(String id) throws IOException {
+        List<Vehicle> filtered = getAllVehicles().stream()
+                .filter(v -> !v.getId().equals(id))
+                .collect(Collectors.toList());
+        saveAll(filtered);
+    }
+
 }
