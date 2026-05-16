@@ -1,5 +1,6 @@
 package com.drivingschool.model;
 
+
 public class Student extends Person {
     private String nic;
     private String address;
@@ -7,7 +8,7 @@ public class Student extends Person {
     private String status;
     private String password;
 
-    // Constructor with all 8 fields
+    // Constructor
     public Student(String id, String name, String phone, String nic, String address,
                    String licenseType, String status, String password) {
         super(id, name, phone);
@@ -64,12 +65,12 @@ public class Student extends Person {
         return "Student";
     }
 
-    // Convert object to a pipe-separated line (8 fields)
+    // Convert object to a pipe-separated line
     public String toFileString() {
         return id + "|" + name + "|" + phone + "|" + nic + "|" + address + "|" + licenseType + "|" + status + "|" + password;
     }
 
-    // Create object from a pipe-separated line (8 fields)
+    // Create object from a pipe-separated line
     public static Student fromFileString(String line) {
         String[] parts = line.split("\\|");
         // Expecting exactly 8 parts
