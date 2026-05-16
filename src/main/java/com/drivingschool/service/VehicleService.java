@@ -63,4 +63,17 @@ public class VehicleService {
         fileHandler.writeAllLines(FILE_NAME, lines);
     }
 
+    public List<Vehicle> searchVehicles(String keyword) throws IOException {
+        if (keyword == null || keyword.trim().isEmpty()) {
+            return getAllVehicles();
+        }
+        String lowerKeyword = keyword.toLowerCase().trim();
+        return getAllVehicles().stream()
+                .filter(v -> v.getId().toLowerCase().contains(lowerKeyword) ||
+                        v.getRegNo().toLowerCase().contains(lowerKeyword) ||
+                        v.getModel().toLowerCase().contains(lowerKeyword) ||
+                        v.getType().toLowerCase().contains(lowerKeyword))
+                .collect(Collectors.toList());
+    }
+
 }
