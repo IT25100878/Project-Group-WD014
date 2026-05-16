@@ -53,5 +53,12 @@ public class VehicleController {
         return "redirect:/vehicles";
     }
 
+    @GetMapping("/edit/{id}")
+    public String showEditForm(@PathVariable String id, Model model) throws IOException {
+        Vehicle vehicle = vehicleService.getVehicleById(id);
+        model.addAttribute("vehicle", vehicle);
+        return "vehicle-form";
+    }
+
 
 }
