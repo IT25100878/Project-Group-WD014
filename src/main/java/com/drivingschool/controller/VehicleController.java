@@ -36,5 +36,22 @@ public class VehicleController {
         return "vehicle-form";
     }
 
+    @PostMapping("/save")
+    public String save(Vehicle vehicle) throws IOException {
+        if (vehicle.getId() == null || vehicle.getId().isEmpty()) {
+            // Create new vehicle
+            List<Vehicle> existing = vehicleService.getAllVehicles();
+            int nextId = existing.size() + 1;
+            String newId = "VEH" + String.format("%03d", nextId);
+            vehicle.setId(newId);
+            vehicle.setStatus("Available");
+            vehicleService.addVehicle(vehicle);
+        } else {
+            // Update existing vehicle
+            vehicleService.updateVehicle(vehicle);
+        }
+        return "redirect:/vehicles";
+    }
+
 
 }
