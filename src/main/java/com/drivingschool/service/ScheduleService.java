@@ -49,3 +49,32 @@ public class ScheduleService {
         saveAll(list);
     }
 
+    public void deleteSchedule(String id) throws IOException {
+        List<Schedule> filtered = getAllSchedules().stream()
+                .filter(s -> !s.getId().equals(id))
+                .collect(Collectors.toList());
+        saveAll(filtered);
+    }
+
+    private void saveAll(List<Schedule> list) throws IOException {
+        List<String> lines = new ArrayList<>();
+        for (Schedule s : list) {
+            lines.add(s.toFileString());
+        }
+        fileHandler.writeAllLines(FILE_NAME, lines);
+    }
+
+    public List<Schedule> searchSchedules(String keyword) throws IOException {
+        if (keyword == null || keyword.trim().isEmpty()) {
+            return getAllSchedules();
+        }
+        String lowerKeyword = keyword.toLowerCase().trim();
+        return getAllSchedules().stream()
+                .filter(s -> s.getId().toLowerCase().contains(lowerKeyword) ||
+                        s.getStudentId().toLowerCase().contains(lowerKeyword) ||
+                        s.getInstructorId().toLowerCase().contains(lowerKeyword) ||
+                        s.getStatus().toLowerCase().contains(lowerKeyword))
+                .collect(Collectors.toList());
+    }
+}
+
