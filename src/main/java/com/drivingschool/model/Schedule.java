@@ -50,3 +50,8 @@ public class Schedule {
         return status; }
     public void setStatus(String status) {
         this.status = status; }
+
+    public String toFileString() {
+        return id + "|" + studentId + "|" + instructorId + "|" + vehicleId + "|" +
+                startTime + "|" + endTime + "|" + status;
+    }
