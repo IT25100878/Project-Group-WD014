@@ -17,5 +17,18 @@ public class VehicleController {
     @Autowired
     private VehicleService vehicleService;
 
+    @GetMapping
+    public String list(@RequestParam(required = false) String search, Model model) throws IOException {
+        List<Vehicle> vehicles;
+        if (search != null && !search.trim().isEmpty()) {
+            vehicles = vehicleService.searchVehicles(search);
+            model.addAttribute("searchKeyword", search);
+        } else {
+            vehicles = vehicleService.getAllVehicles();
+        }
+        model.addAttribute("vehicles", vehicles);
+        return "vehicle-list";
+    }
+
 
 }
