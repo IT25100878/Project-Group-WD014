@@ -14,6 +14,8 @@ import java.util.List;
 
 public class VehicleController {
 
+    @Autowired
+    private VehicleService vehicleService;
 
 
 }
