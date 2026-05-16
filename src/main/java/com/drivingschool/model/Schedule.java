@@ -55,3 +55,10 @@ public class Schedule {
         return id + "|" + studentId + "|" + instructorId + "|" + vehicleId + "|" +
                 startTime + "|" + endTime + "|" + status;
     }
+
+    public static Schedule fromFileString(String line) {
+        String[] parts = line.split("\\|");
+        return new Schedule(parts[0], parts[1], parts[2], parts[3],
+                LocalDateTime.parse(parts[4]), LocalDateTime.parse(parts[5]), parts[6]);
+    }
+}
