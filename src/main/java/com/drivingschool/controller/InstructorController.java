@@ -32,4 +32,17 @@ public class InstructorController {
         model.addAttribute("instructor", new Instructor("", "", "", "", "", ""));
         return "instructor-form";
     }
+    @PostMapping("/save")
+    public String save(Instructor instructor) throws IOException {
+        if (instructor.getId() == null || instructor.getId().isEmpty()) {
+            List<Instructor> existing = instructorService.getAllInstructors();
+            int nextId = existing.size() + 1;
+            instructor.setId("INS" + String.format("%03d", nextId));
+            instructor.setStatus("Available");
+            instructorService.addInstructor(instructor);
+        } else {
+            instructorService.updateInstructor(instructor);
+        }
+        return "redirect:/instructors";
+    }
 }
