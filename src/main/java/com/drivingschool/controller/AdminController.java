@@ -27,7 +27,6 @@ public class AdminController {
         model.addAttribute("admin", new Admin("", "", "", ""));
         return "admin-form"; //return admin form page
     }
-
     //save new admin or update existing admin
     @PostMapping("/save")
     public String save(Admin admin) throws IOException {
