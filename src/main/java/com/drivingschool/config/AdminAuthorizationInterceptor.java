@@ -9,6 +9,8 @@ public class AdminAuthorizationInterceptor implements HandlerInterceptor{
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
+        HttpSession session = request.getSession(); //get the current user session
+        String role = (String) session.getAttribute("adminRole");  //get the admin role stored in the session
 
 
     }
