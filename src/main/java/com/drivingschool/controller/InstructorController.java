@@ -27,4 +27,9 @@ public class InstructorController {
         model.addAttribute("instructors", instructors);
         return "instructor-list";
     }
+    @GetMapping("/new")
+    public String showCreateForm(Model model) {
+        model.addAttribute("instructor", new Instructor("", "", "", "", "", ""));
+        return "instructor-form";
+    }
 }
