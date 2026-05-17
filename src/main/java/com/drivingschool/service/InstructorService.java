@@ -46,5 +46,18 @@ public class InstructorService {
         }
         saveAll(list);
     }
+    public void deleteInstructor(String id) throws IOException {
+        List<Instructor> filtered = getAllInstructors().stream()
+                .filter(i -> !i.getId().equals(id))
+                .collect(Collectors.toList());
+        saveAll(filtered);
+    }
 
+    private void saveAll(List<Instructor> list) throws IOException {
+        List<String> lines = new ArrayList<>();
+        for (Instructor i : list) {
+            lines.add(i.toFileString());
+        }
+        fileHandler.writeAllLines(FILE_NAME, lines);
+    }
 }
