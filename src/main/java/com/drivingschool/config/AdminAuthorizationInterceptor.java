@@ -17,7 +17,24 @@ public class AdminAuthorizationInterceptor implements HandlerInterceptor{
             return true;
         }
 
+        //get the requested URL
+        String uri = request.getRequestURI();
 
+        // Block "Admin" role from accessing any /admins/** URLs
+        if ("Admin".equals(role) && uri.startsWith("/admins")) {
+
+            //send access denied error
+            response.sendError(HttpServletResponse.SC_FORBIDDEN,
+                    "Access Denied: Admins cannot manage admins.");
+
+            return false; //stop the request
+        }
+        return true; //allow the request
     }
 
+
+
+
 }
+
+
