@@ -11,4 +11,16 @@ public class Instructor {
         this.specialization = specialization;
         this.status = status;
     }
+    @Override
+    public String getRole() {
+        return "Instructor";
+    }
+
+    // Getters and setters (generate via IntelliJ: right-click → Generate → Getter and Setter)
+    public String getLicenseNo() { return licenseNo; }
+    public void setLicenseNo(String licenseNo) { this.licenseNo = licenseNo; }
+    public String getSpecialization() { return specialization; }
+    public void setSpecialization(String specialization) { this.specialization = specialization; }
+    public String getStatus() { return status; }
+    public void setStatus(String status) { this.status = status; }
 }
