@@ -23,4 +23,12 @@ public class Instructor {
     public void setSpecialization(String specialization) { this.specialization = specialization; }
     public String getStatus() { return status; }
     public void setStatus(String status) { this.status = status; }
+    public String toFileString() {
+        return id + "|" + name + "|" + phone + "|" + licenseNo + "|" + specialization + "|" + status;
+    }
+
+    public static Instructor fromFileString(String line) {
+        String[] parts = line.split("\\|");
+        return new Instructor(parts[0], parts[1], parts[2], parts[3], parts[4], parts[5]);
+    }
 }
