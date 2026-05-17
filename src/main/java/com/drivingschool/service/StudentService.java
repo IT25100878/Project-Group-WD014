@@ -16,10 +16,12 @@ public class StudentService {
     private FileHandler fileHandler;
     private final String FILE_NAME = "students.txt";
 
+    //Add a new student
     public void addStudent(Student student) throws IOException {
         fileHandler.appendLine(FILE_NAME, student.toFileString());
     }
 
+    //Read all students from the file
     public List<Student> getAllStudents() throws IOException {
         List<String> lines = fileHandler.readAllLines(FILE_NAME);
         List<Student> students = new ArrayList<>();
@@ -31,6 +33,7 @@ public class StudentService {
         return students;
     }
 
+    //Find student by ID
     public Student getStudentById(String id) throws IOException {
         return getAllStudents().stream()
                 .filter(s -> s.getId().equals(id))
@@ -38,6 +41,7 @@ public class StudentService {
                 .orElse(null);
     }
 
+    //update student list
     public void updateStudent(Student updated) throws IOException {
         List<Student> students = getAllStudents();
         for (int i = 0; i < students.size(); i++) {
@@ -49,6 +53,7 @@ public class StudentService {
         saveAll(students);
     }
 
+    //delete existing student
     public void deleteStudent(String id) throws IOException {
         List<Student> filtered = getAllStudents().stream()
                 .filter(s -> !s.getId().equals(id))
@@ -64,6 +69,7 @@ public class StudentService {
         fileHandler.writeAllLines(FILE_NAME, lines);
     }
 
+    //Search student by keywords
     public List<Student> searchStudents(String keyword) throws IOException {
         if (keyword == null || keyword.trim().isEmpty()) {
             return getAllStudents();
