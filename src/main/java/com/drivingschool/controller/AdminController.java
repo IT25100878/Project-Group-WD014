@@ -28,5 +28,25 @@ public class AdminController {
         return "admin-form"; //return admin form page
     }
 
+    //save new admin or update existing admin
+    @PostMapping("/save")
+    public String save(Admin admin) throws IOException {
+        //check if admin is new
+        if (admin.getId() == null || admin.getId().isEmpty()) {
+
+            List<Admin> existing = adminService.getAllAdmins(); //get existing admins
+            int nextId = existing.size() + 1; //generate next admin ID
+            admin.setId("ADM" + String.format("%03d", nextId));  //set formatted admin ID
+            adminService.addAdmin(admin); //add new admin
+
+        } else {
+
+            //update existing admin
+            adminService.updateAdmin(admin);
+        }
+        //redirect to admin list page
+        return "redirect:/admins";
+    }
+
 
 }
