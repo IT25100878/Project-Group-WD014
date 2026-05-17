@@ -12,6 +12,11 @@ public class AdminAuthorizationInterceptor implements HandlerInterceptor{
         HttpSession session = request.getSession(); //get the current user session
         String role = (String) session.getAttribute("adminRole");  //get the admin role stored in the session
 
+        //if user role is not found in session, allow the request
+        if (role == null) {
+            return true;
+        }
+
 
     }
 
