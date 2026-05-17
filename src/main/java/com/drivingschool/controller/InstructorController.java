@@ -51,5 +51,9 @@ public class InstructorController {
         model.addAttribute("instructor", instructor);
         return "instructor-form";
     }
-
+    @GetMapping("/delete/{id}")
+    public String delete(@PathVariable String id) throws IOException {
+        instructorService.deleteInstructor(id);
+        return "redirect:/instructors";
+    }
 }
