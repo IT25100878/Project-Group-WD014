@@ -45,4 +45,11 @@ public class InstructorController {
         }
         return "redirect:/instructors";
     }
+    @GetMapping("/edit/{id}")
+    public String showEditForm(@PathVariable String id, Model model) throws IOException {
+        Instructor instructor = instructorService.getInstructorById(id);
+        model.addAttribute("instructor", instructor);
+        return "instructor-form";
+    }
+
 }
