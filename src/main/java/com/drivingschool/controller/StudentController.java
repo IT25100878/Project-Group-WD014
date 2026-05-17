@@ -38,7 +38,7 @@ public class StudentController {
     @PostMapping("/save")
     public String saveStudent(Student student) throws IOException {
         if (student.getId() == null || student.getId().isEmpty()) {
-            //generate unique ID
+            // CREATE – generate unique ID
             List<Student> existing = studentService.getAllStudents();
             int maxId = 0;
             for (Student s : existing) {
