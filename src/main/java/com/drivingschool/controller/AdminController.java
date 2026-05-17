@@ -20,6 +20,13 @@ public class AdminController {
         model.addAttribute("admins", adminService.getAllAdmins());
         return "admin-list";
     }
+    //Open form page for adding a new admin
+    @GetMapping("/new")
+    public String createForm(Model model) {
+        //Send empty admin object to form
+        model.addAttribute("admin", new Admin("", "", "", ""));
+        return "admin-form"; //return admin form page
+    }
 
 
 }
