@@ -12,4 +12,19 @@ import java.util.List;
 @RequestMapping("/instructors")
 public class InstructorController {
 
+    @Autowired
+    private InstructorService instructorService;
+
+    @GetMapping
+    public String list(@RequestParam(required = false) String search, Model model) throws IOException {
+        List<Instructor> instructors;
+        if (search != null && !search.trim().isEmpty()) {
+            instructors = instructorService.searchInstructors(search);
+            model.addAttribute("searchKeyword", search);
+        } else {
+            instructors = instructorService.getAllInstructors();
+        }
+        model.addAttribute("instructors", instructors);
+        return "instructor-list";
+    }
 }
