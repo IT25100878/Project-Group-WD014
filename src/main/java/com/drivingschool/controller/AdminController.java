@@ -15,4 +15,11 @@ public class AdminController {
     @Autowired
     private AdminService adminService;
 
+    @GetMapping
+    public String list(Model model) throws IOException {
+        model.addAttribute("admins", adminService.getAllAdmins());
+        return "admin-list";
+    }
+
+
 }
