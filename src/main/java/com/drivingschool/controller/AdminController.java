@@ -55,6 +55,14 @@ public class AdminController {
         return "admin-form"; //return admin form page
     }
 
+    //delete admin by ID and redirects to the admin list page
+    @GetMapping("/delete/{id}")
+    public String delete(@PathVariable String id) throws IOException {
+        //remove admin from service using ID
+        adminService.deleteAdmin(id);
+        return "redirect:/admins"; //redirect back to admin list page
+    }
+
 
 
 }
