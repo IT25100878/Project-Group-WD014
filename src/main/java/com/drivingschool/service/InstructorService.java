@@ -29,4 +29,22 @@ public class InstructorService {
         }
         return list;
     }
+    public Instructor getInstructorById(String id) throws IOException {
+        return getAllInstructors().stream()
+                .filter(i -> i.getId().equals(id))
+                .findFirst()
+                .orElse(null);
+    }
+
+    public void updateInstructor(Instructor updated) throws IOException {
+        List<Instructor> list = getAllInstructors();
+        for (int i = 0; i < list.size(); i++) {
+            if (list.get(i).getId().equals(updated.getId())) {
+                list.set(i, updated);
+                break;
+            }
+        }
+        saveAll(list);
+    }
+
 }
