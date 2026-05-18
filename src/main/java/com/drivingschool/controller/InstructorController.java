@@ -1,0 +1,71 @@
+package com.drivingschool.controller;
+import com.drivingschool.model.Instructor;
+import com.drivingschool.service.InstructorService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
+import java.io.IOException;
+import java.util.List;
+
+@Controller
+@RequestMapping("/instructors")
+public class InstructorController {
+
+    @Autowired
+    private InstructorService instructorService;
+
+    @GetMapping
+    public String list(@RequestParam(required = false) String search, Model model) throws IOException {
+        List<Instructor> instructors;
+        if (search != null && !search.trim().isEmpty()) {
+            instructors = instructorService.searchInstructors(search);
+            model.addAttribute("searchKeyword", search);
+        } else {
+            instructors = instructorService.getAllInstructors();
+        }
+        model.addAttribute("instructors", instructors);
+        return "instructor-list";
+    }
+    @GetMapping("/new")
+    public String showCreateForm(Model model) {
+        model.addAttribute("instructor", new Instructor("", "", "", "", "", ""));
+        return "instructor-form";
+    }
+    @PostMapping("/save")
+    public String save(Instructor instructor) throws IOException {
+        if (instructor.getId() == null || instructor.getId().isEmpty()) {
+            List<Instructor> existing = instructorService.getAllInstructors();
+            int maxId = 0;
+            for (Instructor i : existing) {
+                String id = i.getId();
+                if (id != null && id.startsWith("INS")) {
+                    try {
+                        int num = Integer.parseInt(id.substring(3));
+                        if (num > maxId) maxId = num;
+                    } catch (NumberFormatException ignored) {}
+                }
+            }
+            int nextId = maxId + 1;
+            String newId = "INS" + String.format("%03d", nextId);
+            instructor.setId(newId);
+            instructor.setStatus("Available");
+            instructorService.addInstructor(instructor);
+        } else {
+            // UPDATE
+            instructorService.updateInstructor(instructor);
+        }
+        return "redirect:/instructors";
+    }
+    @GetMapping("/edit/{id}")
+    public String showEditForm(@PathVariable String id, Model model) throws IOException {
+        Instructor instructor = instructorService.getInstructorById(id);
+        model.addAttribute("instructor", instructor);
+        return "instructor-form";
+    }
+    @GetMapping("/delete/{id}")
+    public String delete(@PathVariable String id) throws IOException {
+        instructorService.deleteInstructor(id);
+        return "redirect:/instructors";
+    }
+}
