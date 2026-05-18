@@ -78,4 +78,3 @@ public class PaymentController {
         return "redirect:/payments";
     }
 }
-
