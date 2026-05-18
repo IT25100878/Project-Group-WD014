@@ -68,6 +68,7 @@ public class InstructorService {
         return getAllInstructors().stream()
                 .filter(i -> i.getId().toLowerCase().contains(lowerKeyword) ||
                         i.getName().toLowerCase().contains(lowerKeyword) ||
+
                         i.getPhone().toLowerCase().contains(lowerKeyword) ||
                         i.getSpecialization().toLowerCase().contains(lowerKeyword))
                 .collect(Collectors.toList());
