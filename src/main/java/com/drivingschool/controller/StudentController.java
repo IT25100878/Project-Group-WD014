@@ -16,6 +16,7 @@ public class StudentController {
     @Autowired
     private StudentService studentService;
 
+    //display student list and search students
     @GetMapping
     public String listStudents(@RequestParam(required = false) String search, Model model) throws IOException {
         List<Student> students;
@@ -29,16 +30,18 @@ public class StudentController {
         return "student-list";
     }
 
+    //Shows create form
     @GetMapping("/new")
     public String showCreateForm(Model model) {
         model.addAttribute("student", new Student("", "", "", "", "", "", "", ""));
         return "student-form";
     }
 
+    //Save new or update existing student
     @PostMapping("/save")
     public String saveStudent(Student student) throws IOException {
         if (student.getId() == null || student.getId().isEmpty()) {
-            // CREATE – generate unique ID
+            //generate unique ID if new student
             List<Student> existing = studentService.getAllStudents();
             int maxId = 0;
             for (Student s : existing) {
@@ -59,12 +62,13 @@ public class StudentController {
             }
             studentService.addStudent(student);
         } else {
-            // UPDATE
+            //update existing student
             studentService.updateStudent(student);
         }
         return "redirect:/students";
     }
 
+    //open edit page for a specific student
     @GetMapping("/edit/{id}")
     public String showEditForm(@PathVariable String id, Model model) throws IOException {
         Student student = studentService.getStudentById(id);
@@ -72,9 +76,11 @@ public class StudentController {
         return "student-form";
     }
 
+    //Delete a student
     @GetMapping("/delete/{id}")
     public String deleteStudent(@PathVariable String id) throws IOException {
         studentService.deleteStudent(id);
         return "redirect:/students";
     }
 }
+
