@@ -237,25 +237,120 @@ public class ScheduleController {
         // If ID is empty -> create new schedule
         if (schedule.getId() == null || schedule.getId().isEmpty()) {
 
-            // Get all schedules
+            // =====================================================
+// CREATE OPERATION - GENERATE UNIQUE SCHEDULE ID
+// =====================================================
+
+// Get all schedules from the database/service
+// This is needed to find the highest existing ID
             List<Schedule> existing = scheduleService.getAllSchedules();
 
-            // Generate next schedule number
-            int nextId = existing.size() + 1;
+// Variable to store the maximum numeric ID found
+// Initial value is 0
+            int maxId = 0;
 
-            // Create formatted schedule ID
-            // Example: SCH001
-            schedule.setId("SCH" + String.format("%03d", nextId));
+// =====================================================
+// LOOP THROUGH EACH EXISTING SCHEDULE
+// =====================================================
+            for (Schedule s : existing) {
 
-            // Save new schedule
+                // Get the current schedule ID
+                // Example: SCH001
+                String sid = s.getId();
+
+                // =================================================
+                // CHECK:
+                // 1. ID should not be null
+                // 2. ID should start with "SCH"
+                // =================================================
+                if (sid != null && sid.startsWith("SCH")) {
+
+                    try {
+
+                        // =============================================
+                        // EXTRACT NUMERIC PART FROM ID
+                        //
+                        // Example:
+                        // SCH001 → 001
+                        // SCH025 → 025
+                        // =============================================
+                        String numberPart = sid.substring(3);
+
+                        // Convert string number into integer
+                        // Example:
+                        // "001" → 1
+                        int num = Integer.parseInt(numberPart);
+
+                        // =============================================
+                        // CHECK WHETHER CURRENT NUMBER
+                        // IS GREATER THAN maxId
+                        // =============================================
+                        if (num > maxId)
+
+                            // Update maxId with larger value
+                            maxId = num;
+
+                    } catch (NumberFormatException ignored) {
+
+                        // =============================================
+                        // IGNORE INVALID ID FORMATS
+                        //
+                        // Examples:
+                        // SCHABC
+                        // SCH12A
+                        // SCH-01
+                        // =============================================
+
+                    }
+                }
+            }
+
+// =====================================================
+// GENERATE NEXT ID NUMBER
+//
+// Example:
+// maxId = 15
+// nextId = 16
+// =====================================================
+            int nextId = maxId + 1;
+
+// =====================================================
+// CREATE NEW FORMATTED SCHEDULE ID
+//
+// %03d means:
+// - Minimum 3 digits
+// - Add leading zeros if necessary
+//
+// Examples:
+// 1  → 001
+// 7  → 007
+// 25 → 025
+// =====================================================
+            String newId = "SCH" + String.format("%03d", nextId);
+
+// Set generated ID to schedule object
+            schedule.setId(newId);
+
+// =====================================================
+// SAVE NEW SCHEDULE INTO DATABASE/SYSTEM
+// =====================================================
             scheduleService.addSchedule(schedule);
+
         } else {
 
-            // Update existing schedule
+            // =================================================
+            // UPDATE EXISTING SCHEDULE
+            //
+            // If ID already exists,
+            // this is not a new record
+            // =================================================
             scheduleService.updateSchedule(schedule);
         }
 
-        // Redirect to schedule list page
+// =====================================================
+// REDIRECT USER TO SCHEDULE LIST PAGE
+// AFTER SAVE OR UPDATE
+// =====================================================
         return "redirect:/schedules";
     }
 
