@@ -22,7 +22,7 @@ public class AdminController {
     }
     //Open form page for adding a new admin
     @GetMapping("/new")
-    public String createForm(Model model) {
+    public String showCreateForm(Model model) {
         //Send empty admin object to form
         model.addAttribute("admin", new Admin("", "", "", ""));
         return "admin-form"; //return admin form page
@@ -60,9 +60,10 @@ public class AdminController {
     public String delete(@PathVariable String id) throws IOException {
         //remove admin from service using ID
         adminService.deleteAdmin(id);
-        return "redirect:/admins"; //redirect back to admin list page
+        return "redirect:/admins";
     }
 
 
 
 }
+
