@@ -1,9 +1,6 @@
 package com.drivingschool.controller;
 
 import com.drivingschool.model.Schedule;
-import com.drivingschool.model.Student;
-import com.drivingschool.model.Instructor;
-import com.drivingschool.model.Vehicle;
 
 import com.drivingschool.service.ScheduleService;
 import com.drivingschool.service.StudentService;
