@@ -49,7 +49,7 @@ public class AdminController {
 
     //gets admin data by ID and opens the form page for editing
     @GetMapping("/edit/{id}")
-    public String editForm(@PathVariable String id, Model model) throws IOException {
+    public String showEditForm(@PathVariable String id, Model model) throws IOException {
         //get admin by ID and send data to form
         model.addAttribute("admin", adminService.getAdminById(id));
         return "admin-form"; //return admin form page
