@@ -33,10 +33,27 @@ public class AdminController {
         //check if admin is new
         if (admin.getId() == null || admin.getId().isEmpty()) {
 
-            List<Admin> existing = adminService.getAllAdmins(); //get existing admins
-            int nextId = existing.size() + 1; //generate next admin ID
-            admin.setId("ADM" + String.format("%03d", nextId));  //set formatted admin ID
-            adminService.addAdmin(admin); //add new admin
+            //CREATE – generate unique ID
+            List<Admin> existing = adminService.getAllAdmins(); //Get all existing admins
+            int maxId = 0; //Store highest admin number
+
+            for (Admin a : existing) { //check each admin ID
+                String id = a.getId(); //get admin ID
+
+                if (id != null && id.startsWith("ADM")) { //check valid ID format
+
+                    try {
+                        int num = Integer.parseInt(id.substring(3)); //extract number part from ID
+                        if (num > maxId) maxId = num; //update highest ID number
+
+                    } catch (NumberFormatException ignored) {}
+                }
+            }
+
+            int nextId = maxId + 1; //generate next admin ID
+            String newId = "ADM" + String.format("%03d", nextId); //format ID
+            admin.setId(newId); //set new admin ID
+            adminService.addAdmin(admin); //save new admin
 
         } else {
 
