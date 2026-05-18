@@ -39,15 +39,25 @@ public class VehicleController {
     @PostMapping("/save")
     public String save(Vehicle vehicle) throws IOException {
         if (vehicle.getId() == null || vehicle.getId().isEmpty()) {
-            // Create new vehicle
+            // CREATE – generate unique ID
             List<Vehicle> existing = vehicleService.getAllVehicles();
-            int nextId = existing.size() + 1;
+            int maxId = 0;
+            for (Vehicle v : existing) {
+                String id = v.getId();
+                if (id != null && id.startsWith("VEH")) {
+                    try {
+                        int num = Integer.parseInt(id.substring(3));
+                        if (num > maxId) maxId = num;
+                    } catch (NumberFormatException ignored) {}
+                }
+            }
+            int nextId = maxId + 1;
             String newId = "VEH" + String.format("%03d", nextId);
             vehicle.setId(newId);
             vehicle.setStatus("Available");
             vehicleService.addVehicle(vehicle);
         } else {
-            // Update existing vehicle
+            // UPDATE
             vehicleService.updateVehicle(vehicle);
         }
         return "redirect:/vehicles";
