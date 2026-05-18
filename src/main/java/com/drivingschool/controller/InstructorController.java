@@ -36,11 +36,23 @@ public class InstructorController {
     public String save(Instructor instructor) throws IOException {
         if (instructor.getId() == null || instructor.getId().isEmpty()) {
             List<Instructor> existing = instructorService.getAllInstructors();
-            int nextId = existing.size() + 1;
-            instructor.setId("INS" + String.format("%03d", nextId));
+            int maxId = 0;
+            for (Instructor i : existing) {
+                String id = i.getId();
+                if (id != null && id.startsWith("INS")) {
+                    try {
+                        int num = Integer.parseInt(id.substring(3));
+                        if (num > maxId) maxId = num;
+                    } catch (NumberFormatException ignored) {}
+                }
+            }
+            int nextId = maxId + 1;
+            String newId = "INS" + String.format("%03d", nextId);
+            instructor.setId(newId);
             instructor.setStatus("Available");
             instructorService.addInstructor(instructor);
         } else {
+            // UPDATE
             instructorService.updateInstructor(instructor);
         }
         return "redirect:/instructors";
